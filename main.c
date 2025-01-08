@@ -137,7 +137,8 @@ main (int   argc,
 
   if (bash_cmd == NULL)
     {
-      printf ("Provide a command to execute");
+      printf ("Provide a command to execute\n");
+
       return 1;
     }
 
