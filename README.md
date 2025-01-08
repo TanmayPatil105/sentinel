@@ -41,7 +41,7 @@ need to be a superuser or you could set `/proc` value by using
 the following command:
 
 ```
-echo 0 > /proc/sys/kernel/yama/ptrace_scope
+echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
 ```
 Note: This change is not persistent across reboot.
 
