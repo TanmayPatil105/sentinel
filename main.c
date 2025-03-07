@@ -86,7 +86,6 @@ watch_and_wait (pid_t counterpart)
         }
       else if (WIFSIGNALED (status))
         {
-          succeeded = false;
           break;
         }
     }
@@ -99,7 +98,7 @@ watch_and_wait (pid_t counterpart)
 }
 
 static void
-execute_cmd (char *bash_cmd)
+execute_cmd (char *bash_cmd, char *const envp[])
 {
   char *argv[4] = {SHELL_EXEC_PATH, "-c",
                    NULL, NULL};
@@ -107,12 +106,12 @@ execute_cmd (char *bash_cmd)
   argv[2] = bash_cmd;
 
   /* replace current process */
-  execv (argv[0], argv);
+  execve (argv[0], argv, envp);
 }
 
 int
-main (int   argc,
-      char *argv[])
+main (int argc, char *argv[],
+      char *const envp[])
 {
   bool watch = false;
   char *bash_cmd = NULL;
@@ -157,7 +156,7 @@ main (int   argc,
       return 1;
     }
 
-  execute_cmd (bash_cmd);
+  execute_cmd (bash_cmd, envp);
 
   /* We will never reach here */
   return 0;
